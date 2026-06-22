@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-gateways-routers-directory"
+version = "0.1.0"
+description = "A curated, machine-readable directory of LLM gateways, proxies & routers (open-source and managed), with a CLI."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Amarel Taylor Scott" }]
+keywords = ["llm-gateway", "router", "proxy", "litellm", "openrouter", "directory", "registry"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.urls]
+Repository = "https://github.com/Amarel-Taylor-Scott/llm-gateways-routers-directory"
+
+[project.scripts]
+gateway-dir = "main:main"
+
+[tool.setuptools]
+py-modules = ["__version__", "data", "report", "main"]

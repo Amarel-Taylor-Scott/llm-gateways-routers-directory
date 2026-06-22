@@ -1,0 +1,33 @@
+name: CI
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: CLI smoke
+        run: |
+          gateway-dir stats
+          gateway-dir export --format json > /dev/null
+      - name: README is in sync with registry
+        run: |
+          python main.py generate
+          git diff --exit-code README.md
+      - name: Tests
+        run: pytest -q
+      - name: Lint (non-blocking)
+        run: ruff check . || true
